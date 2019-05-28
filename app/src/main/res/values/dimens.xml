@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="dp20">20dp</dimen>
+    <dimen name="thumnail_default_width">5dp</dimen>
+    <dimen name="thumnail_default_height">5dp</dimen>
 </resources>

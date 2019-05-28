@@ -5,4 +5,12 @@
     <color name="colorAccent">#FF4081</color>
     <color name="balck">#000000</color>
     <color name="huise">#999999</color>
+
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#B0000000</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_point_color">#90FFFFFF</color>
+    <color name="laser_color">#196fda</color>
+    <color name="corner_color">#196fda</color>
+    <color name="line_color">#979797</color>
 </resources>
