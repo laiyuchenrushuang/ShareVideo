@@ -4,101 +4,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="videotool.hc.com.videotool.MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:gravity="center"
-        android:text="@string/app_video_wellcome"
-        android:textColor="@color/balck"
-        android:textSize="20dp" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <SurfaceView
-            android:id="@+id/video"
-            android:layout_width="match_parent"
-            android:layout_height="140dp" />
-
-        <Button
-            android:id="@+id/button_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:drawable/ic_media_play" />
-        <Button
-            android:id="@+id/button_pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:drawable/ic_media_pause"
-            android:visibility="gone"/>
-    </FrameLayout>
-    <!--<VideoView-->
-    <!--android:id="@+id/video"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="140dp" />-->
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="40dp"
-            android:layout_height="80dp"
-            android:background="@color/huise"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
             android:gravity="center"
-            android:text="学习视频" />
+            android:text="@string/app_video_wellcome"
+            android:textColor="@color/balck"
+            android:textSize="20dp" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4">
 
-        <videotool.hc.com.videotool.HorizontalListView
-            android:id="@+id/horizontal_lv"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_gravity="center_vertical" />
-    </LinearLayout>
+            <SurfaceView
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center_horizontal"
-        android:text="@string/app_video_e"
-        android:textColor="@color/balck" />
+            <Button
+                android:id="@+id/button_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@android:drawable/ic_media_play" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp">
+            <Button
+                android:id="@+id/button_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@android:drawable/ic_media_pause"
+                android:visibility="gone" />
+        </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/image1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp20"
-            android:background="@mipmap/ic_launcher" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp20"
-            android:background="@mipmap/ic_launcher" />
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@color/huise"
+                android:gravity="center"
+                android:text="学习视频" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp20"
-            android:background="@mipmap/ic_launcher" />
+            <videotool.hc.com.videotool.HorizontalListView
+                android:id="@+id/horizontal_lv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp20"
-            android:background="@mipmap/ic_launcher" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:gravity="center"
+            android:text="@string/app_video_e"
+            android:textColor="@color/balck" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            >
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:background="@mipmap/ic_launcher" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:background="@mipmap/ic_launcher" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:background="@mipmap/ic_launcher" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:background="@mipmap/ic_launcher" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

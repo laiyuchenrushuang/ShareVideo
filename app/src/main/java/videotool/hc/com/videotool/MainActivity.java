@@ -2,6 +2,7 @@ package videotool.hc.com.videotool;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -16,20 +17,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.MediaController;
-import android.widget.VideoView;
+import android.widget.RelativeLayout;
 
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener, AdapterView.OnItemClickListener, MediaPlayer.OnVideoSizeChangedListener {
     @BindView(R.id.video)
     SurfaceView mSurfaceView;
     //    VideoView video;
     @BindView(R.id.image1)
     ImageView imageView1;
+    @BindView(R.id.image2)
+    ImageView imageView2;
+    @BindView(R.id.image3)
+    ImageView imageView3;
+    @BindView(R.id.image4)
+    ImageView imageView4;
     @BindView(R.id.horizontal_lv)
     HorizontalListView horizontalListView;
     @BindView(R.id.button_play)
@@ -37,11 +43,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.button_pause)
     Button bt_pause;
     MediaPlayer mediaPlayer;
-    private HorizontalListViewAdapter mHorizontalListViewAdapter;
     private static final int REQ_PER = 10;
     private String[] mPermissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-    int currentPosition;
+    static int currentPosition;
     private SurfaceHolder surfaceHolder;
+    private int surfaceWidth,surfaceHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         initView();
         initEvent();
-//        String path = "/storage/emulated/0/DCIM/test.mp4";
-//        video.setVideoPath(path);
-//        MediaController mediaController = new MediaController(this);
-//        video.setMediaController(mediaController);
-//        video.requestFocus();
     }
 
     private void initView() {
         final int[] ids = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher};
-        mHorizontalListViewAdapter = new HorizontalListViewAdapter(getApplicationContext(), ids);
+        HorizontalListViewAdapter mHorizontalListViewAdapter = new HorizontalListViewAdapter(getApplicationContext(), ids);
         horizontalListView.setAdapter(mHorizontalListViewAdapter);
 
         surfaceHolder = mSurfaceView.getHolder();
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             Log.i("lylog", "SurfaceHolder 变化时");
+            surfaceWidth = width;
+            surfaceHeight = height;
             mediaPlayer.setDisplay(surfaceHolder);
             if (currentPosition > 0) {
                 // 创建SurfaceHolder的时候，如果存在上次播放的位置，则按照上次播放位置进行播放
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
     private void play(int currentPosition) {
-        Log.d("lylog", "currentPosition =  " + currentPosition);
+        Log.i("lylog", "currentPosition =  " + currentPosition);
         mediaPlayer.seekTo(currentPosition);
         mediaPlayer.start();
     }
@@ -137,17 +140,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initEvent() {
         imageView1.setOnClickListener(this);
+        imageView2.setOnClickListener(this);
+        imageView3.setOnClickListener(this);
+        imageView4.setOnClickListener(this);
         bt_play.setOnClickListener(this);
         bt_pause.setOnClickListener(this);
         mSurfaceView.setOnClickListener(this);
         horizontalListView.setOnItemClickListener(this);
+        mediaPlayer.setOnVideoSizeChangedListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.image1:
-                startActivity(new Intent().setClass(getApplicationContext(), ToolActivity.class));
+                intent.setClass(this, ToolActivity.class);
+                intent.putExtra("url","http://www.baidu.com");
+                startActivity(intent);
+                break;
+            case R.id.image2:
+                intent.setClass(this, ToolActivity.class);
+                intent.putExtra("url","http://www.baidu.com");
+                startActivity(intent);
+                break;
+            case R.id.image3:
+                intent.setClass(this, ToolActivity.class);
+                intent.putExtra("url","http://www.baidu.com");
+                startActivity(intent);
+                break;
+            case R.id.image4:
+                intent.setClass(this, ToolActivity.class);
+                intent.putExtra("url","http://www.baidu.com");
+                startActivity(intent);
                 break;
             case R.id.button_play:
                 playButtonClick();
@@ -186,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void playButtonClick() {
         mediaPlayer.start();
         bt_play.setVisibility(View.INVISIBLE);
+        play(currentPosition);
     }
 
     @Override
@@ -217,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         bt_play.setVisibility(View.VISIBLE);
-        play(currentPosition);
+        //play(currentPosition);
     }
 
     @Override
@@ -227,6 +253,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("lylog", " position = " + position);
+        Log.i("lylog", " position = " + position);
+    }
+
+    @Override
+    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+//        changeVideoSize();
+    }
+
+    public void changeVideoSize() {
+        int videoWidth = mediaPlayer.getVideoWidth();
+        int videoHeight = mediaPlayer.getVideoHeight();
+
+        //根据视频尺寸去计算->视频可以在sufaceView中放大的最大倍数。
+        float max;
+        if (getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            //竖屏模式下按视频宽度计算放大倍数值
+            max = Math.max((float) videoWidth / (float) surfaceWidth,(float) videoHeight / (float) surfaceHeight);
+        } else{
+            //横屏模式下按视频高度计算放大倍数值
+            max = Math.max(((float) videoWidth/(float) surfaceHeight),(float) videoHeight/(float) surfaceWidth);
+        }
+
+        //视频宽高分别/最大倍数值 计算出放大后的视频尺寸
+        videoWidth = (int) Math.ceil((float) videoWidth / max);
+        videoHeight = (int) Math.ceil((float) videoHeight / max);
+
+        //无法直接设置视频尺寸，将计算出的视频尺寸设置到surfaceView 让视频自动填充。
+        mSurfaceView.setLayoutParams(new RelativeLayout.LayoutParams(videoWidth, videoHeight));
     }
 }

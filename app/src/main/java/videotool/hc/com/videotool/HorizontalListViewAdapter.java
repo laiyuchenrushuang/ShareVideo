@@ -51,6 +51,7 @@ public class HorizontalListViewAdapter extends BaseAdapter{
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.horizontal_list_item, null);
             holder.mImage=(ImageView)convertView.findViewById(R.id.img_list_item);
+            holder.video_text=(TextView) convertView.findViewById(R.id.video_text);
             convertView.setTag(holder);
         }else{
             holder=(ViewHolder)convertView.getTag();
@@ -62,12 +63,13 @@ public class HorizontalListViewAdapter extends BaseAdapter{
         }
         iconBitmap = getPropThumnail(position);
         holder.mImage.setImageBitmap(iconBitmap);
-
+        holder.video_text.setText("视频名称");
         return convertView;
     }
 
     private static class ViewHolder {
         private ImageView mImage;
+        public TextView video_text;
     }
     private Bitmap getPropThumnail(int id){
 //        Drawable d = mContext.getResources().getDrawable(id);
